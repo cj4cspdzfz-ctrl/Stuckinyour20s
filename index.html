@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Youth Hub — Career · Travel · Community</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="/src/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div style="display:flex;align-items:center;gap:12px">
+        <img src="" alt="" style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#46e)" />
+        <div>
+          <h1>Youth Hub</h1>
+          <div class="small">Career · Travel · Community — built for young people</div>
+        </div>
+      </div>
+      <nav id="tabs">
+        <button class="tab active" data-tab="career">Career</button>
+        <button class="tab" data-tab="travel">Travel</button>
+        <button class="tab" data-tab="community">Community</button>
+      </nav>
+    </header>
+
+    <div class="grid">
+      <aside class="side card" id="side-panel">
+        <h3>Quick actions</h3>
+        <div class="small">Use these to test features quickly</div>
+        <div style="margin-top:12px">
+          <button class="btn" id="btn-sample-cv">Load sample CV</button>
+          <button class="ghost" id="btn-clear">Clear saved data</button>
+        </div>
+
+        <label for="loc">Your city / ZIP</label>
+        <input type="text" id="loc" placeholder="e.g., London, SW1A or 10001" />
+
+        <label>Interests (travel / community)</label>
+        <div class="chips" id="interest-chips">
+          <div class="chip" data-val="nature">Nature</div>
+          <div class="chip" data-val="food">Food</div>
+          <div class="chip" data-val="history">History</div>
+          <div class="chip" data-val="art">Art</div>
+          <div class="chip" data-val="sports">Sports</div>
+        </div>
+
+        <div style="margin-top:12px" class="small">Saved items</div>
+        <div id="saved-list" class="list"></div>
+      </aside>
+
+      <main>
+        <section id="career" class="card">
+          <h2>Career</h2>
+          <div class="small">Upload CV and get job ideas nearby.</div>
+
+          <label>Upload CV (plain text or PDF)</label>
+          <div class="file-drop" id="file-drop">Click or drag a .txt or .pdf here to upload</div>
+          <input type="file" id="cv-file" accept=".txt,.pdf,.doc,.docx" style="display:none" />
+
+          <label>Or paste CV text</label>
+          <textarea id="cv-text" placeholder="Paste resume or CV text here"></textarea>
+
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button class="btn" id="analyze-btn">Analyze CV</button>
+            <button class="ghost" id="extract-keywords">Extract keywords</button>
+          </div>
+
+          <div id="career-results" class="list" style="margin-top:12px"></div>
+        </section>
+
+        <section id="travel" class="card hidden">
+          <h2>Travel</h2>
+          <div class="small">Plan short trips and get accommodation suggestions.</div>
+
+          <label>Budget (GBP / USD — any currency works)</label>
+          <input type="number" id="budget" placeholder="e.g., 200" />
+
+          <label>Trip length (days)</label>
+          <input type="number" id="days" placeholder="e.g., 3" />
+
+          <label>Bucket list tags (comma-separated)</label>
+          <input type="text" id="bucket" placeholder="e.g., hiking, beaches, museums" />
+
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <button class="btn" id="suggest-trip">Suggest trips</button>
+            <button class="ghost" id="surprise-trip">I'm feeling spontaneous</button>
+          </div>
+
+          <div id="travel-results" class="list" style="margin-top:12px"></div>
+
+          <div id="map" style="height:400px; margin-top:20px; border-radius:12px;"></div>
+        </section>
+
+        <section id="community" class="card hidden">
+          <h2>Community</h2>
+          <div class="small">Volunteer opportunities, clubs, and hobbies to join nearby.</div>
+
+          <label>Filter by interest</label>
+          <select id="community-interest">
+            <option value="">— any —</option>
+            <option value="nature">Nature / Environment</option>
+            <option value="art">Art / Culture</option>
+            <option value="food">Food / Cooking</option>
+            <option value="sports">Sports</option>
+            <option value="teaching">Teaching / Mentoring</option>
+          </select>
+
+          <div style="margin-top:10px;display:flex;gap:8px;">
+            <button class="btn" id="find-community">Find opportunities</button>
+            <button class="ghost" id="add-opportunity">Add custom opportunity</button>
+          </div>
+
+          <div id="community-results" class="list" style="margin-top:12px"></div>
+
+          <div id="add-op-form" class="hidden" style="margin-top:10px">
+            <label>Title</label>
+            <input id="op-title" />
+            <label>Description</label>
+            <textarea id="op-desc"></textarea>
+            <label>Interest tag</label>
+            <input id="op-tag" placeholder="e.g., art" />
+            <div style="margin-top:8px;display:flex;gap:8px">
+              <button class="btn" id="save-op">Save</button>
+              <button class="ghost" id="cancel-op">Cancel</button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <footer class="small">
+      Built for young people • Data stored locally in your browser • Accommodation suggestions via API (once configured)
+    </footer>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
